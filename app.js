@@ -26,3 +26,20 @@ User {firstName: "Jill", lastName: "Robinson", age: 25, gender: "female"}
 
 
 //////////////////////////////////////////////////////////////////////////////////
+//                              Prototypes
+
+User.prototype.email = '@facebook.com';
+"@facebook.com"
+
+user1.email
+"@facebook.com"
+
+User.prototype.getEmail = function(){
+    return this.firstName + this.lastName + this.email
+}
+
+user1.getEmail()
+"JohnSmith@facebook.com"
+
+
+//////////////////////////////////////////////////////////////////////////////////
