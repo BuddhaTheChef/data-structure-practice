@@ -113,14 +113,28 @@ LinkedList.prototype.search = function (searchValue) {
   return null;
 };
 
+LinkedList.prototype.indexOf = function(value) {
+  var indexes = [];
+  var currentIndex = 0;
+  var currentNode = this.head;
+  while(currentNode) {
+    if(currentNode.value === value) {
+      indexes.push(currentIndex);
+    }
+    currentNode = currentNode.next;
+    currentIndex++;
+  }
+  return indexes;
+}
+
 var myLL = new LinkedList();
-myLL.addToHead(123);
+myLL.addToHead(20);
 myLL.addToHead(70);
 myLL.addToHead('hello');
 myLL.addToTail(19);
 myLL.addToTail('world');
 myLL.addToTail(20);
 
-
+console.log(myLL.indexOf(20));
 
 //////////////////////////////////////////////////////////////////////////////////
