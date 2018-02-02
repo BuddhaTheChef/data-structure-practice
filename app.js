@@ -178,6 +178,26 @@ BST.prototype.depthFirstTraversal = function(iteratorFunc, order) {
 };
 
 
+BST.prototype.breathFirstTraversal = function(iteratorFunc) {
+  var queue = [this];
+  while(queue.length) {
+    var treeNode = queue.shift();
+    iteratorFunc(treeNode);
+    if(treeNode.left) queue.push(treeNode.left);
+    if(treeNode.right) queue.push(treeNode.right);
+  }
+}
+
+BST.prototype.getMinVal = function() {
+  if(this.left) return this.left.getMinVal();
+  else return this.value;
+};
+
+BST.prototype.getMaxVal = function() {
+  if(this.right) return this.right.getMaxVal();
+  else return this.value;
+}
+
 var bst = new BST(50);
 
 bst.insert(30);
@@ -192,11 +212,15 @@ bst.insert(85);
 bst.insert(105);
 bst.insert(10);
 
-console.log(bst.right.left.left)
-console.log(bst.left.right.left)
-console.log(bst.right.right)
+function log(value) {
+  console.log(value);
+}
 
+bst.depthFirstTraversal(log, 'pre-order');
+bst.depthFirstTraversal(log, 'in-order');
+bst.depthFirstTraversal(log, 'post-order');
 
-
+console.log('Min: ', bst.getMinVal());
+console.log('Max: ', bst.getMaxVal());
 
 //////////////////////////////////////////////////////////////////////////////////
