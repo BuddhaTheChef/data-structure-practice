@@ -140,87 +140,142 @@
 //////////////////////////////////////////////////////////////////////////////////
 //                            Binary Search Tree
 
-function BST(value) {
+// function BST(value) {
+//   this.value = value;
+//   this.left = null;
+//   this.right = null;
+// }
+//
+// BST.prototype.insert = function(value) {
+//   if(value <= this.value) {
+//     if(!this.left) this.left = new BST(value);
+//     else this.left.insert(value);
+//   }
+//   else if(value > this.value) {
+//     if(!this.right) this.right = new BST(value);
+//     else this.right.insert(value);
+//   }
+// }
+//
+// BST.prototype.contains = function(value) {
+//   if(value === this.value) return true;
+//   else if(value < this.value) {
+//     if(!this.left) return false;
+//     else return this.left.contains(value);
+//   }
+//   else if(value > this.value) {
+//     if(!this.right) return false;
+//     else return this.right.contains(value);
+//   }
+// }
+//
+// BST.prototype.depthFirstTraversal = function(iteratorFunc, order) {
+//   if(order === 'pre-order') iteratorFunc(this.value);
+//   if(this.left) this.left.depthFirstTraversal(iteratorFunc, order);
+//   if(order === 'in-order') iteratorFunc(this.value);
+//   if(this.right) this.right.depthFirstTraversal(iteratorFunc, order);
+//   if(order === 'post-order') iteratorFunc(this.value);
+// };
+//
+//
+// BST.prototype.breathFirstTraversal = function(iteratorFunc) {
+//   var queue = [this];
+//   while(queue.length) {
+//     var treeNode = queue.shift();
+//     iteratorFunc(treeNode);
+//     if(treeNode.left) queue.push(treeNode.left);
+//     if(treeNode.right) queue.push(treeNode.right);
+//   }
+// }
+//
+// BST.prototype.getMinVal = function() {
+//   if(this.left) return this.left.getMinVal();
+//   else return this.value;
+// };
+//
+// BST.prototype.getMaxVal = function() {
+//   if(this.right) return this.right.getMaxVal();
+//   else return this.value;
+// }
+//
+// var bst = new BST(50);
+//
+// bst.insert(30);
+// bst.insert(70);
+// bst.insert(100);
+// bst.insert(60);
+// bst.insert(59);
+// bst.insert(20);
+// bst.insert(45);
+// bst.insert(35);
+// bst.insert(85);
+// bst.insert(105);
+// bst.insert(10);
+//
+// function log(value) {
+//   console.log(value);
+// }
+//
+// bst.depthFirstTraversal(log, 'pre-order');
+// bst.depthFirstTraversal(log, 'in-order');
+// bst.depthFirstTraversal(log, 'post-order');
+//
+// console.log('Min: ', bst.getMinVal());
+// console.log('Max: ', bst.getMaxVal());
+
+//////////////////////////////////////////////////////////////////////////////////
+
+// UNicode value of any character by taking a value and giving a corresponding number
+console.log('hello world'.charCodeAt(2)); ---> 103
+
+//////////////////////////////////////////////////////////////////////////////////
+//                                 Hash table
+
+function HashTable(size) {
+  this.buckets = Array(size);
+  this.numBuckets = this.buckets.length;
+}
+
+function HashNode(key, value, next) {
+  this.key = key;
   this.value = value;
-  this.left = null;
-  this.right = null;
+  this.next = next || null;
 }
 
-BST.prototype.insert = function(value) {
-  if(value <= this.value) {
-    if(!this.left) this.left = new BST(value);
-    else this.left.insert(value);
+HashTable.prototype.hash = function(key) {
+  var total = 0;
+  for(var i = 0; i < key.length; i++) {
+    total += key.charCodeAt(i);
   }
-  else if(value > this.value) {
-    if(!this.right) this.right = new BST(value);
-    else this.right.insert(value);
-  }
-}
+  var bucket = total % this.numBuckets;
+  return bucket;
+};
 
-BST.prototype.contains = function(value) {
-  if(value === this.value) return true;
-  else if(value < this.value) {
-    if(!this.left) return false;
-    else return this.left.contains(value);
+HashTable.prototype.insert = function(key,value) {
+  var index = this.hash(key);
+  console.log('INDEX: ', index);
+  if(!this.buckets[index]) this.buckets[index] = new HashNode(key, value);
+  else {
+    var currentNode = this.buckets[index];
+    while (currentNode.next) {
+      currentNode = currentNode.next;
+    }
+   currentNode.next = new HashNode(key, value);
   }
-  else if(value > this.value) {
-    if(!this.right) return false;
-    else return this.right.contains(value);
-  }
-}
-
-BST.prototype.depthFirstTraversal = function(iteratorFunc, order) {
-  if(order === 'pre-order') iteratorFunc(this.value);
-  if(this.left) this.left.depthFirstTraversal(iteratorFunc, order);
-  if(order === 'in-order') iteratorFunc(this.value);
-  if(this.right) this.right.depthFirstTraversal(iteratorFunc, order);
-  if(order === 'post-order') iteratorFunc(this.value);
 };
 
 
-BST.prototype.breathFirstTraversal = function(iteratorFunc) {
-  var queue = [this];
-  while(queue.length) {
-    var treeNode = queue.shift();
-    iteratorFunc(treeNode);
-    if(treeNode.left) queue.push(treeNode.left);
-    if(treeNode.right) queue.push(treeNode.right);
-  }
-}
 
-BST.prototype.getMinVal = function() {
-  if(this.left) return this.left.getMinVal();
-  else return this.value;
-};
 
-BST.prototype.getMaxVal = function() {
-  if(this.right) return this.right.getMaxVal();
-  else return this.value;
-}
 
-var bst = new BST(50);
+var myHT = new HashTable(30);
 
-bst.insert(30);
-bst.insert(70);
-bst.insert(100);
-bst.insert(60);
-bst.insert(59);
-bst.insert(20);
-bst.insert(45);
-bst.insert(35);
-bst.insert(85);
-bst.insert(105);
-bst.insert(10);
+myHT.insert('Dean', 'Dean@gmail.com');
+myHT.insert('Jane', 'Jane@gmail.com');
+myHT.insert('Dane', 'Dane@yahoo.com');
 
-function log(value) {
-  console.log(value);
-}
+console.log(myHT.buckets);
 
-bst.depthFirstTraversal(log, 'pre-order');
-bst.depthFirstTraversal(log, 'in-order');
-bst.depthFirstTraversal(log, 'post-order');
 
-console.log('Min: ', bst.getMinVal());
-console.log('Max: ', bst.getMaxVal());
 
 //////////////////////////////////////////////////////////////////////////////////
