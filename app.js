@@ -273,6 +273,18 @@ HashTable.prototype.insert = function(key,value) {
   }
 };
 
+HashTable.prototype.get = function(key) {
+  var index = this.hash(key);
+  if(!this.buckets[index]) return null;
+  else {
+    var currentNode = this.buckets[index];
+    while(currentNode) {
+      if(currentNode.key === key) return currentNode.value;
+      currentNode = cureentNode.next;
+    }
+    return null;
+  }
+};
 
 var myHT = new HashTable(30);
 
@@ -282,10 +294,7 @@ myHT.insert('Dane', 'Dane@yahoo.com');
 myHT.insert('Dean', 'DaneMane@gmail.com');
 myHT.insert('Jane', 'JaneDOEYOOOO@gmail.com');
 
-
-
-
-console.log(myHT.buckets);
+console.log(myHT.get('Dean'));
 
 
 
